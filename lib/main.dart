@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:movie_app/providers/bottom_navigation_provider.dart';
 import 'package:movie_app/providers/movie_provider.dart';
 import 'package:movie_app/routes/routes.dart';
+import 'package:movie_app/screens/bottom_nav.dart';
 import 'package:movie_app/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -28,8 +30,10 @@ class AppSatate extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MovieProvider(), lazy: false),
+        ChangeNotifierProvider(
+            create: (_) => BottomNavigationProvider(), lazy: false),
       ],
-      child: const MyApp(),
+      child: MyApp(),
     );
   }
 }
@@ -47,9 +51,19 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.indigo,
         ),
       ),
-      initialRoute: HomeScreen.routeName,
+      initialRoute: NavBarScreen.routeName,
       routes: getAplicationRoutes(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       title: 'My App',
+//       home: HomeScreen(),
+//     );
+//   }
+// }

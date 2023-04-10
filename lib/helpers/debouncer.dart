@@ -1,6 +1,4 @@
 import 'dart:async';
-// Credits
-// https://stackoverflow.com/a/52922130/7834829
 
 class Debouncer<T> {
   Debouncer({required this.duration, this.onValue});

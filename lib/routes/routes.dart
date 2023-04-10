@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/screens/bottom_nav.dart';
 
 // Imports
 
@@ -15,4 +16,5 @@ export 'package:movie_app/screens/details_screen.dart';
 Map<String, WidgetBuilder> getAplicationRoutes() => <String, WidgetBuilder>{
       HomeScreen.routeName: (BuildContext context) => const HomeScreen(),
       DetailsScreen.routeName: (BuildContext context) => const DetailsScreen(),
+      NavBarScreen.routeName: (BuildContext context) => NavBarScreen(),
     };

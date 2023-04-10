@@ -1,18 +1,19 @@
 import 'package:movie_app/models/models.dart';
-import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/providers/movie_provider.dart';
 import 'package:movie_app/screens/details_screen.dart';
 import 'package:provider/provider.dart';
 
 class MovieSlider extends StatefulWidget {
-  const MovieSlider(
-      {Key? key, required this.movies, this.title, required this.onNextPage})
-      : super(key: key);
+  const MovieSlider({
+    Key? key,
+    required this.movies,
+    this.title,
+    required this.onNextPage,
+  }) : super(key: key);
 
   final List<Movie> movies;
   final String? title;
   final Function onNextPage;
-
   @override
   State<MovieSlider> createState() => _MovieSliderState();
 }
