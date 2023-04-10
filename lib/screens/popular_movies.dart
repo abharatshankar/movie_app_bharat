@@ -54,7 +54,9 @@ class _PopularMoviesState extends State<PopularMovies> {
         scrollDirection: Axis.vertical,
         itemBuilder: (BuildContext context, int index) {
           if (index == movies.length) {
-            moviesProvider.getPopularMovies();
+            widget.isPopularMovies
+                ? moviesProvider.getPopularMovies()
+                : moviesProvider.getTopRatedMovies();
             return buildProgressIndicator();
           }
 

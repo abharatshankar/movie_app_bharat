@@ -1,3 +1,4 @@
+import 'package:movie_app/helpers/constants.dart';
 import 'package:movie_app/models/models.dart';
 import 'package:movie_app/providers/movie_provider.dart';
 import 'package:movie_app/screens/details_screen.dart';
@@ -101,7 +102,7 @@ class _MoviePoster extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: FadeInImage(
-                  placeholder: const AssetImage('assets/images/no-image.jpg'),
+                  placeholder: const AssetImage(StrConstants.noImgIcon),
                   image: NetworkImage(movie.fullPosterImg),
                   width: 130,
                   height: 190,

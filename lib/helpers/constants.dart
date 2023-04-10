@@ -1,5 +1,3 @@
-// !Put your API_KEY here.
-
 class StrConstants {
   static const String apiKey = '909594533c98883408adef5d56143539';
   static const String baseUrl = 'api.themoviedb.org';
