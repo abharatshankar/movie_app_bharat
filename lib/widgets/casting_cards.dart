@@ -1,4 +1,4 @@
-import 'package:movie_app/models/creadits_response.dart';
+import 'package:movie_app/helpers/constants.dart';
 import 'package:movie_app/models/models.dart';
 import 'package:movie_app/providers/movie_provider.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +55,7 @@ class _CastCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: FadeInImage(
-              placeholder: const AssetImage('assets/images/no-image.jpg'),
+              placeholder: const AssetImage(StrConstants.noImgIcon),
               image: NetworkImage(actor.fullProfilePath),
               height: 140,
               width: 100,

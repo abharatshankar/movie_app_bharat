@@ -1,7 +1,6 @@
 import 'package:flutter_card_swipper/flutter_card_swiper.dart';
+import 'package:movie_app/helpers/constants.dart';
 import 'package:movie_app/models/models.dart';
-
-import '../models/movie.dart';
 import '../screens/details_screen.dart';
 
 class CardSwiper extends StatelessWidget {
@@ -41,7 +40,7 @@ class CardSwiper extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: FadeInImage(
-                  placeholder: const AssetImage('assets/images/no-image.jpg'),
+                  placeholder: const AssetImage(StrConstants.noImgIcon),
                   image: NetworkImage(movie.fullPosterImg),
                   fit: BoxFit.cover,
                 ),

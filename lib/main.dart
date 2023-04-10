@@ -5,7 +5,6 @@ import 'package:movie_app/providers/bottom_navigation_provider.dart';
 import 'package:movie_app/providers/movie_provider.dart';
 import 'package:movie_app/routes/routes.dart';
 import 'package:movie_app/screens/bottom_nav.dart';
-import 'package:movie_app/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -33,7 +32,7 @@ class AppSatate extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => BottomNavigationProvider(), lazy: false),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     );
   }
 }
@@ -57,13 +56,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       title: 'My App',
-//       home: HomeScreen(),
-//     );
-//   }
-// }

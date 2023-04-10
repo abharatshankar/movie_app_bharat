@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/helpers/constants.dart';
 import 'package:movie_app/providers/movie_provider.dart';
-import 'package:movie_app/search/movie_search_delegate.dart';
 import 'package:movie_app/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  static const String routeName = 'Home';
+  static const String routeName = StrConstants.homeRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +15,9 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Movies on Cines'),
+        title: const Text(StrConstants.moviesTitle),
         centerTitle: true,
         elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(context: context, delegate: MovieSearchDelegate());
-            },
-            icon: const Icon(Icons.search_outlined),
-          )
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -33,12 +25,12 @@ class HomeScreen extends StatelessWidget {
             CardSwiper(movies: moviesProvider.onDisplayMovies),
             MovieSlider(
               movies: moviesProvider.popularMovies,
-              title: 'Popular',
+              title: StrConstants.popularCap,
               onNextPage: () => moviesProvider.getPopularMovies(),
             ),
             MovieSlider(
               movies: moviesProvider.topRated,
-              title: 'Top Rated',
+              title: StrConstants.topRated,
               onNextPage: () => moviesProvider.getTopRatedMovies(),
             ),
             const SizedBox(height: 10),

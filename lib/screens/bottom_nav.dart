@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/helpers/constants.dart';
 import 'package:movie_app/providers/bottom_navigation_provider.dart';
 import 'package:movie_app/screens/home_screen.dart';
 import 'package:movie_app/screens/popular_movies.dart';
@@ -9,16 +10,11 @@ class NavBarScreen extends StatelessWidget {
 
   final List<dynamic> screens = [
     const HomeScreen(),
-    const PopularMovies(),
-    // Container(
-    //   color: Colors.amber,
-    // ),
-    Container(
-      color: Colors.green,
-    ),
+    const PopularMovies(isPopularMovies: true),
+    const PopularMovies(isPopularMovies: false),
   ];
 
-  static const String routeName = 'NavBarScreen';
+  static const String routeName = StrConstants.navBarScreenRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +29,11 @@ class NavBarScreen extends StatelessWidget {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Home',
+              label: StrConstants.homeTitle,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.thumb_up_alt),
-              label: 'Popular',
+              label: StrConstants.popularCap,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.trending_up),

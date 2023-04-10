@@ -1,16 +1,10 @@
 import 'dart:async';
 
 import 'package:http/http.dart' as http;
-import 'package:movie_app/helpers/debouncer.dart';
+import 'package:movie_app/helpers/constants.dart';
 import 'package:movie_app/models/models.dart';
-import 'package:movie_app/models/search_response.dart';
 
 class MovieProvider extends ChangeNotifier {
-  // !Put your API_KEY here.
-  final String _apiKey = '909594533c98883408adef5d56143539';
-  final String _baseUrl = 'api.themoviedb.org';
-  final String _language = 'es-ES';
-
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
   List<Movie> topRated = [];
@@ -19,8 +13,6 @@ class MovieProvider extends ChangeNotifier {
 
   int _popularPage = 0;
   int _topRatedPage = 0;
-
-  final debouncer = Debouncer(duration: const Duration(milliseconds: 500));
 
   final StreamController<List<Movie>> _suggestionStreamController =
       StreamController.broadcast();
@@ -34,9 +26,9 @@ class MovieProvider extends ChangeNotifier {
   }
 
   Future<String> _getJsonData(String endPoint, [int page = 1]) async {
-    final url = Uri.https(_baseUrl, '3/movie/$endPoint', {
-      'api_key': _apiKey,
-      'language': _language,
+    final url = Uri.https(StrConstants.baseUrl, '3/movie/$endPoint', {
+      'api_key': StrConstants.apiKey,
+      'language': StrConstants.language,
       'page': '$page',
     });
 
@@ -45,7 +37,7 @@ class MovieProvider extends ChangeNotifier {
   }
 
   getOnDiaplayMovies() async {
-    final jsonData = await _getJsonData('now_playing');
+    final jsonData = await _getJsonData(StrConstants.nowPlaying);
     final nowPlayingResponse = NowPlayingResponse.fromJson(jsonData);
 
     onDisplayMovies = nowPlayingResponse.results;
@@ -54,7 +46,7 @@ class MovieProvider extends ChangeNotifier {
 
   getPopularMovies() async {
     _popularPage++;
-    final jsonData = await _getJsonData('popular', _popularPage);
+    final jsonData = await _getJsonData(StrConstants.popular, _popularPage);
     final popularResponse = PopularResponse.fromJson(jsonData);
 
     popularMovies = [...popularMovies, ...popularResponse.results];
@@ -63,7 +55,8 @@ class MovieProvider extends ChangeNotifier {
 
   getTopRatedMovies() async {
     _topRatedPage++;
-    final jsonData = await _getJsonData('top_rated', _topRatedPage);
+    final jsonData =
+        await _getJsonData(StrConstants.topRatedStr, _topRatedPage);
     final topRatedResponse = PopularResponse.fromJson(jsonData);
 
     topRated = [...topRated, ...topRatedResponse.results];
@@ -87,32 +80,32 @@ class MovieProvider extends ChangeNotifier {
     return creditsResponse.cast;
   }
 
-  Future<List<Movie>> searchMovie(String query) async {
-    final url = Uri.https(_baseUrl, '3/search/movie', {
-      'api_key': _apiKey,
-      'language': _language,
-      'page': '1',
-      'query': query,
-    });
+  // Future<List<Movie>> searchMovie(String query) async {
+  //   final url = Uri.https(_baseUrl, '3/search/movie', {
+  //     'api_key': _apiKey,
+  //     'language': _language,
+  //     'page': '1',
+  //     'query': query,
+  //   });
 
-    final response = await http.get(url);
-    final searchResponse = SearchResponse.fromJson(response.body);
+  //   final response = await http.get(url);
+  //   final searchResponse = SearchResponse.fromJson(response.body);
 
-    return searchResponse.results;
-  }
+  //   return searchResponse.results;
+  // }
 
-  void getSuggestionsByQuery(String searchTerm) {
-    debouncer.value = '';
-    debouncer.onValue = (value) async {
-      final results = await searchMovie(value);
-      _suggestionStreamController.add(results);
-    };
+  // void getSuggestionsByQuery(String searchTerm) {
+  //   debouncer.value = '';
+  //   debouncer.onValue = (value) async {
+  //     final results = await searchMovie(value);
+  //     _suggestionStreamController.add(results);
+  //   };
 
-    final timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
-      debouncer.value = searchTerm;
-    });
+  //   final timer = Timer.periodic(const Duration(milliseconds: 300), (_) {
+  //     debouncer.value = searchTerm;
+  //   });
 
-    Future.delayed(const Duration(milliseconds: 301))
-        .then((_) => timer.cancel());
-  }
+  //   Future.delayed(const Duration(milliseconds: 301))
+  //       .then((_) => timer.cancel());
+  // }
 }

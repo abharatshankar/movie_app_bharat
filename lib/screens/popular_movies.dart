@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/helpers/constants.dart';
+import 'package:movie_app/helpers/helper_widget.dart';
 import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/providers/movie_provider.dart';
 import 'package:movie_app/widgets/horizantal_poster.dart';
 import 'package:provider/provider.dart';
 
 class PopularMovies extends StatefulWidget {
-  const PopularMovies({super.key});
+  const PopularMovies({super.key, required this.isPopularMovies});
+  final bool isPopularMovies;
 
   @override
   State<PopularMovies> createState() => _PopularMoviesState();
@@ -23,11 +26,15 @@ class _PopularMoviesState extends State<PopularMovies> {
   Widget build(BuildContext context) {
     final moviesProvider = Provider.of<MovieProvider>(context);
 
-    final List<Movie> movies = moviesProvider.popularMovies;
+    final List<Movie> movies = widget.isPopularMovies
+        ? moviesProvider.popularMovies
+        : moviesProvider.topRated;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Popular Movies'),
+        title: Text(widget.isPopularMovies
+            ? StrConstants.popularMoviesTitle
+            : StrConstants.topRatedMoviesTitle),
         centerTitle: true,
         elevation: 0,
       ),
@@ -38,7 +45,9 @@ class _PopularMoviesState extends State<PopularMovies> {
             double currentScroll = Scrollable.of(context).position.pixels;
             double delta = MediaQuery.of(context).size.height * 0.20;
             if (maxScroll - currentScroll <= delta) {
-              moviesProvider.getPopularMovies();
+              widget.isPopularMovies
+                  ? moviesProvider.getPopularMovies()
+                  : moviesProvider.getTopRatedMovies();
             }
           }),
         itemCount: movies.length + 1,
@@ -46,7 +55,7 @@ class _PopularMoviesState extends State<PopularMovies> {
         itemBuilder: (BuildContext context, int index) {
           if (index == movies.length) {
             moviesProvider.getPopularMovies();
-            return _buildProgressIndicator();
+            return buildProgressIndicator();
           }
 
           return HorizantalPoster(
@@ -55,15 +64,6 @@ class _PopularMoviesState extends State<PopularMovies> {
             title: movies[index].title,
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildProgressIndicator() {
-    return const Center(
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: CircularProgressIndicator(),
       ),
     );
   }

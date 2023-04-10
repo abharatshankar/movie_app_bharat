@@ -1,11 +1,11 @@
+import 'package:movie_app/helpers/constants.dart';
 import 'package:movie_app/models/models.dart';
-import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/widgets/widgets.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
 
-  static const String routeName = 'Details';
+  static const String routeName = StrConstants.detailsRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,8 @@ class DetailsScreen extends StatelessWidget {
                 _PosterAndTitle(movie: movie),
                 _Overview(movie: movie),
                 CastingCards(movieId: movie.id),
-                SimilarMovieSlider(id: movie.id, title: 'Similar'),
+                SimilarMovieSlider(
+                    id: movie.id, title: StrConstants.similarTitle),
                 const SizedBox(height: 10),
               ],
             ),
@@ -52,7 +53,7 @@ class _CustomAppBar extends StatelessWidget {
           child: Text(movie.title, textAlign: TextAlign.center),
         ),
         background: FadeInImage(
-          placeholder: const AssetImage('assets/images/loading.gif'),
+          placeholder: const AssetImage(StrConstants.loadingAnimation),
           image: NetworkImage(movie.fullBackdropPath),
           fit: BoxFit.cover,
         ),
@@ -80,7 +81,7 @@ class _PosterAndTitle extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: FadeInImage(
-                placeholder: const AssetImage('assets/images/no-image.jpg'),
+                placeholder: const AssetImage(StrConstants.noImgIcon),
                 image: NetworkImage(movie.fullPosterImg),
                 height: 150,
               ),
@@ -93,13 +94,13 @@ class _PosterAndTitle extends StatelessWidget {
               children: [
                 Text(
                   movie.title,
-                  style: textTheme.headline5,
+                  style: textTheme.headlineSmall,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
                 Text(
                   movie.originalTitle,
-                  style: textTheme.subtitle1,
+                  style: textTheme.titleMedium,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),
@@ -108,7 +109,7 @@ class _PosterAndTitle extends StatelessWidget {
                     const Icon(Icons.star_outline,
                         size: 15, color: Colors.grey),
                     const SizedBox(width: 8),
-                    Text('${movie.voteAverage}', style: textTheme.caption),
+                    Text('${movie.voteAverage}', style: textTheme.bodySmall),
                   ],
                 ),
               ],
@@ -132,7 +133,7 @@ class _Overview extends StatelessWidget {
       child: Text(
         movie.overview,
         textAlign: TextAlign.justify,
-        style: Theme.of(context).textTheme.subtitle1,
+        style: Theme.of(context).textTheme.titleMedium,
       ),
     );
   }
